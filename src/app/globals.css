@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-bg;
+  @apply text-white;
+  @apply w-full;
+  @apply overflow-x-hidden;
+  @apply scroll-smooth;
+}
