@@ -12,7 +12,7 @@
     "generate": "drizzle-kit generate:pg",
     "introspect": "drizzle-kit introspect:pg",
     "studio": "drizzle-kit studio --port 3001 --verbose",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.7",
@@ -20,6 +20,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.2.9",
     "@tanstack/react-query": "^5.28.4",
+    "@vercel/analytics": "^1.2.2",
     "date-fns": "^3.4.0",
     "drizzle-orm": "^0.29.3",
     "eslint": "^8.57.0",

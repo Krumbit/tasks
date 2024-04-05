@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Page from "@/components/Page";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body className={`${inter.className} dark`}>
           <Providers>
             <Page>{children}</Page>
+            <Analytics />
           </Providers>
         </body>
       </html>
