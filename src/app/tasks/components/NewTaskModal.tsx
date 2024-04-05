@@ -44,9 +44,9 @@ export default function NewTaskModal({
   const onSubmit: SubmitHandler<NewTaskForm> = async (data) => {
     toast.promise(() => mutation.mutateAsync({ todo: data }), {
       loading: "Adding task...",
-      success: (d) => {
+      success: (data) => {
         modalState.onClose();
-        return `Task #${d[0].id} successfully created.`;
+        return `Task #${data[0].localId} successfully created.`;
       },
       error: "Something went wrong while adding the task",
     });

@@ -30,7 +30,9 @@ export default function TypeCell({ todo }: { todo: Todo }) {
         onAction={(key) => {
           const newType = key as keyof typeof todoTypeMap;
           toast.promise(() => mutation.mutateAsync({ todoId: id, type: newType }), {
-            success: `Task #${id} has been updated to type ${capitalize(newType)}`,
+            success: (data) => {
+              return `Task #${data[0].localId} has been updated to type ${capitalize(newType)}`;
+            },
             error: "Something went wrong updating the task type",
           });
         }}

@@ -27,8 +27,8 @@ export default function DeleteTaskButton({ todoId }: { todoId: number }) {
             variant="flat"
             onPress={() => {
               toast.promise(mutation.mutateAsync({ todoId }), {
-                success: async (_) => {
-                  return `Task #${todoId} deleted`;
+                success: async (data) => {
+                  return `Task #${data[0].localId} deleted`;
                 },
                 error: "Something went wrong deleting the task",
               });

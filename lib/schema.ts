@@ -1,4 +1,4 @@
-import { boolean, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const todoTypes = pgEnum("todo types", ["personal", "work", "school", "misc"]);
 
@@ -9,6 +9,7 @@ export const users = pgTable("users", {
 
 export const todos = pgTable("todos", {
   id: serial("id").primaryKey().notNull(),
+  localId: integer("local_id").primaryKey().notNull(),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).defaultNow().notNull(),
   userId: text("user_id")
     .default("")
