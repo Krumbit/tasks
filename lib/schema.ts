@@ -14,7 +14,7 @@ export const todos = pgTable("todos", {
   userId: text("user_id")
     .default("")
     .notNull()
-    .references(() => users.id, { onUpdate: "cascade" }),
+    .references(() => users.id, { onUpdate: "cascade", onDelete: "cascade" }),
   task: text("task").default("").notNull(),
   type: todoTypes("type").default("misc").notNull(),
   isCompleted: boolean("is_completed").default(false).notNull(),

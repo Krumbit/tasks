@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { users } from "@/lib/schema";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 
@@ -22,10 +23,18 @@ async function validateRequest(request: Request) {
 export async function POST(req: Request) {
   const { type, data } = await validateRequest(req);
 
-  if (type === "user.created" && data.id) {
-    await db.insert(users).values({ id: data.id, whitelisted: false });
-    return new Response("Received", { status: 200 });
-  } else {
-    return new Response("Incorrect type or no user ID detected", { status: 406 });
+  if (!data.id) {
+    return new Response("No user ID detected", { status: 406 })
   }
+
+  switch (type) {
+    case "user.created":
+      await db.insert(users).values({ id: data.id, whitelisted: false });
+      break;
+    case "user.deleted":
+      await db.delete(users).where(eq(users.id, data.id));
+      break;
+  }
+
+  return new Response("Received", { status: 200 });
 }
