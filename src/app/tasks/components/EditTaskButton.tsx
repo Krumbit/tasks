@@ -30,9 +30,9 @@ export default function EditTaskButton({ todoId }: { todoId: number }) {
   });
   const onSubmit: SubmitHandler<EditTaskForm> = (data) => {
     toast.promise(() => mutation.mutateAsync({ todoId, task: data.task }), {
-      success: async (_) => {
+      success: async (d) => {
         onClose();
-        return `Task #${todoId} updated to "${data.task}"`;
+        return `Task #${d[0].localId} updated to "${data.task}"`;
       },
       error: "Something went wrong updating the task",
     });

@@ -40,7 +40,9 @@ export default function DoneButton({ todo }: { todo: Todo }) {
       defaultSelected={done}
       onValueChange={() => {
         toast.promise(() => mutation.mutateAsync({ todoId: id, state: !done }), {
-          success: `Task #${id} marked as ${newTodos?.state || done ? "incomplete" : "completed"}`,
+          success: (data) => {
+            return `Task #${data[0].localId} marked as ${newTodos?.state || done ? "incomplete" : "completed"}`;
+          },
           error: "Something went wrong updating the task complete status",
         });
       }}

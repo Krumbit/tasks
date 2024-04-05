@@ -22,7 +22,7 @@ export const getTodosForCurrentUser = async () => {
 
 export const checkWhitelisted = async ({ userId }: { userId: string }) => {
   const user = await db.select().from(users).where(eq(users.id, userId));
-  if (!user) throw new Error("No user found")
+  if (!user) throw new Error("No user found");
 
   return user[0].whitelisted;
 };
@@ -35,14 +35,27 @@ export const addNewTodo = async ({ todo }: { todo: NewTaskForm }) => {
     );
   }
 
+  const userTodos = await db.select().from(todos).where(eq(todos.userId, userId));
+  const highestLocalId = userTodos.length
+    ? userTodos.reduce((prev, current) => {
+        return prev.id > current.id ? prev : current;
+      }).localId
+    : 0;
+
   return await db
     .insert(todos)
-    .values({ userId, task: todo.task, type: todo.type, isCompleted: false })
+    .values({
+      localId: highestLocalId + 1,
+      userId,
+      task: todo.task,
+      type: todo.type,
+      isCompleted: false,
+    })
     .returning();
 };
 
 export const deleteTodo = async ({ todoId }: { todoId: number }) => {
-  await db.delete(todos).where(eq(todos.id, todoId));
+  return await db.delete(todos).where(eq(todos.id, todoId)).returning();
 };
 
 export const setTodoCompletedState = async ({
@@ -52,7 +65,11 @@ export const setTodoCompletedState = async ({
   todoId: number;
   state: boolean;
 }) => {
-  await db.update(todos).set({ isCompleted: state, updatedAt: new Date().toString() }).where(eq(todos.id, todoId));
+  return await db
+    .update(todos)
+    .set({ isCompleted: state, updatedAt: new Date().toString() })
+    .where(eq(todos.id, todoId))
+    .returning();
 };
 
 export const setTodoType = async ({
@@ -62,9 +79,17 @@ export const setTodoType = async ({
   todoId: number;
   type: (typeof todos.type.enumValues)[number];
 }) => {
-  await db.update(todos).set({ type, updatedAt: new Date().toString() }).where(eq(todos.id, todoId));
+  return await db
+    .update(todos)
+    .set({ type, updatedAt: new Date().toString() })
+    .where(eq(todos.id, todoId))
+    .returning();
 };
 
 export const setTodoTask = async ({ todoId, task }: { todoId: number; task: string }) => {
-  await db.update(todos).set({ task, updatedAt: new Date().toString() }).where(eq(todos.id, todoId));
+  return await db
+    .update(todos)
+    .set({ task, updatedAt: new Date().toString() })
+    .where(eq(todos.id, todoId))
+    .returning();
 };

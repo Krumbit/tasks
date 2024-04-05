@@ -4,7 +4,7 @@ import { Todo } from "./types";
 const whitelistEnabled = false;
 
 const columns: ColumnConfig[] = [
-  { name: "ID", uid: "id", sortable: true },
+  { name: "ID", uid: "localId", sortable: true },
   { name: "DONE", uid: "isCompleted" },
   { name: "TASK", uid: "task" },
   { name: "STATUS", uid: "status" },
