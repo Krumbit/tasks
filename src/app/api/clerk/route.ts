@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   const { type, data } = await validateRequest(req);
 
   if (!data.id) {
-    return new Response("No user ID detected", { status: 406 })
+    return new Response("No user ID detected", { status: 406 });
   }
 
   switch (type) {
