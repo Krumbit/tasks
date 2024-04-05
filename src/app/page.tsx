@@ -1,4 +1,3 @@
-import Page from "@/components/Page";
 import StyledSignIn from "@/components/StyledSignIn";
 import StyledSignUp from "@/components/StyledSignUp";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
@@ -6,7 +5,7 @@ import { Button, Link } from "@nextui-org/react";
 
 export default function HomePage() {
   return (
-    <Page>
+    <>
       <SignedIn>
         <Button color="primary" as={Link} href="/tasks">
           Go to Tasks
@@ -19,6 +18,6 @@ export default function HomePage() {
           <StyledSignUp />
         </div>
       </SignedOut>
-    </Page>
+    </>
   );
 }
