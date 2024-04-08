@@ -46,6 +46,10 @@ export default function TasksTableView() {
     return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
   }, [visibleColumns]);
 
+  /**
+   * Filters tasks based on the provided search filter and the selected task types
+   * @returns The filtered todos
+   */
   const filteredItems = useMemo(() => {
     let filteredTodos = todos.filter((td) => td.isCompleted === showingCompleted);
 
@@ -70,6 +74,10 @@ export default function TasksTableView() {
     return filteredItems.slice(start, end);
   }, [page, filteredItems, rowsPerPage]);
 
+  /**
+   * Sorts items based on the `Number` representation of the selected sort descriptor
+   * @returns The sorted items
+   */
   const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
       const key = columns.find((c) => c.uid === sortDescriptor.column)?.uid as keyof Todo;
@@ -81,7 +89,6 @@ export default function TasksTableView() {
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
-
   const renderCell = (todo: Todo, columnKey: Key) => {
     const { id } = todo;
     const cellValue = todo[columnKey as keyof Todo];

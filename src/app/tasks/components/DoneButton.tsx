@@ -1,9 +1,8 @@
 import { setTodoCompletedState } from "@/lib/util";
 import { Todo } from "@/types";
-import { Button, Checkbox } from "@nextui-org/react";
-import { toast } from "sonner";
+import { Checkbox } from "@nextui-org/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { HiCheck } from "react-icons/hi";
+import { toast } from "sonner";
 
 export default function DoneButton({ todo }: { todo: Todo }) {
   const { id, isCompleted } = todo;
